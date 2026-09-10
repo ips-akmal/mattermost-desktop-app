@@ -1,0 +1,113 @@
+import { Box, Typography, IconButton, InputBase, Avatar, Badge, Divider, Tooltip } from "@mui/material";
+import { Search as SearchIcon, Star as StarIcon, LockOutlined as LockIcon, Language as GlobeIcon, Add as AddIcon, ExpandMore as ExpandMoreIcon, FilterList as FilterListIcon, ForumOutlined as ThreadsIcon, Circle as CircleIcon } from "@mui/icons-material";
+import { C, LAYOUT } from "../../theme/mattermost";
+
+/**
+ * Channel + DM list sidebar
+ * Backend: channels -> GET /channels ; DMs -> GET /users/dms
+ */
+export default function ChannelSidebar({
+  channels,
+  filteredChannels,
+  selectedChannel,
+  selectedDM,
+  searchQuery,
+  setSearchQuery,
+  favoritesOnly,
+  setFavoritesOnly,
+  onSelectChannel,
+  onSelectDM,
+  onCreateChannel,
+  onAddDM,
+  users,
+  onOpenThreads,
+}) {
+  return (
+    <Box
+      sx={{
+        width: { xs: 280, md: LAYOUT.sidebarWidth },
+        bgcolor: C.sidebarBg,
+        display: "flex",
+        flexDirection: "column",
+        flexShrink: 0,
+        borderRight: `1px solid ${C.border}`,
+        overflow: "hidden",
+      }}
+    >
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 1.4, py: 1.1, borderBottom: `1px solid ${C.border}` }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          <Typography sx={{ color: "#fff", fontWeight: 800, fontSize: 15 }}>IPS-USA</Typography>
+          <ExpandMoreIcon sx={{ fontSize: 18, color: C.textMuted }} />
+        </Box>
+        <Tooltip title="Create channel"><IconButton size="small" onClick={onCreateChannel} sx={{ bgcolor: "rgba(255,255,255,0.10)", color: "#fff", width: 26, height: 26 }}><AddIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
+      </Box>
+
+      <Box sx={{ px: 1, py: 0.8, display: "flex", gap: 0.6 }}>
+        <Box sx={{ flex: 1, display: "flex", alignItems: "center", gap: 0.6, bgcolor: "rgba(255,255,255,0.08)", borderRadius: 1.5, px: 1, py: 0.45, border: "1px solid rgba(255,255,255,0.06)" }}>
+          <SearchIcon sx={{ fontSize: 14, color: C.textMuted }} />
+          <InputBase value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Find channel" sx={{ flex: 1, fontSize: 12.5, color: "#fff", "& input::placeholder": { color: C.textMuted, opacity: 1 } }} aria-label="Find channel" />
+          {searchQuery && <IconButton size="small" onClick={() => setSearchQuery("")} sx={{ color: C.textMuted, width: 16, height: 16 }}><Box sx={{ fontSize: 12 }}>✕</Box></IconButton>}
+        </Box>
+        <Tooltip title={favoritesOnly ? "Show all" : "Favorites only"}>
+          <IconButton size="small" onClick={() => setFavoritesOnly((v) => !v)} sx={{ color: favoritesOnly ? "#facc15" : C.textMuted, bgcolor: "rgba(255,255,255,0.06)", borderRadius: 1.5, width: 30, height: 30 }} aria-label="Filter favorites">
+            {favoritesOnly ? <StarIcon sx={{ fontSize: 16 }} /> : <FilterListIcon sx={{ fontSize: 16 }} />}
+          </IconButton>
+        </Tooltip>
+      </Box>
+
+      <Box sx={{ px: 1, py: 0.3 }}>
+        <Box onClick={onOpenThreads} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && onOpenThreads()} sx={{ display: "flex", alignItems: "center", gap: 1, px: 1, py: 0.55, borderRadius: 1, color: C.textPrimary, cursor: "pointer", "&:hover": { bgcolor: C.sidebarHover } }}>
+          <ThreadsIcon sx={{ fontSize: 17 }} /><Typography sx={{ fontSize: 13.5, fontWeight: 500, flex: 1 }}>Threads</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ flex: 1, overflowY: "auto", px: 0.7, py: 0.3, "&::-webkit-scrollbar": { width: 4 }, "&::-webkit-scrollbar-thumb": { bgcolor: "rgba(255,255,255,0.12)", borderRadius: 2 } }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, px: 0.8, py: 0.6, color: C.textMuted }}>
+          <ExpandMoreIcon sx={{ fontSize: 16 }} /><Typography sx={{ fontSize: 11, fontWeight: 800, letterSpacing: 0.6 }}>CHANNELS</Typography><Box sx={{ flex: 1 }} /><Typography sx={{ fontSize: 11 }}>{filteredChannels.length}</Typography>
+        </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+          {filteredChannels.map((ch) => (
+            <Box
+              key={ch.id}
+              onClick={() => onSelectChannel(ch.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && onSelectChannel(ch.id)}
+              sx={{ display: "flex", alignItems: "center", gap: 0.9, px: 1, py: 0.5, borderRadius: 1, cursor: "pointer", bgcolor: selectedChannel === ch.id && !selectedDM ? C.sidebarActive : "transparent", color: selectedChannel === ch.id && !selectedDM ? "#fff" : "#cbd5e1", borderLeft: selectedChannel === ch.id && !selectedDM ? "3px solid #5aa9ff" : "3px solid transparent", "&:hover": { bgcolor: C.sidebarHover } }}
+            >
+              {ch.favorite ? <StarIcon sx={{ fontSize: 13, color: "#facc15" }} /> : ch.icon === "lock" ? <LockIcon sx={{ fontSize: 14, color: selectedChannel === ch.id ? "#fff" : C.textMuted }} /> : <GlobeIcon sx={{ fontSize: 14, color: C.textMuted }} />}
+              <Typography sx={{ fontSize: 13.5, flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: selectedChannel === ch.id ? 600 : 400 }}>{ch.name}</Typography>
+              {ch.unread > 0 && <Box sx={{ minWidth: 18, height: 18, borderRadius: 9, bgcolor: "#e53935", color: "#fff", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", px: 0.5 }}>{ch.unread}</Box>}
+            </Box>
+          ))}
+          <Box onClick={onCreateChannel} role="button" tabIndex={0} sx={{ display: "flex", alignItems: "center", gap: 1, px: 1, py: 0.5, color: C.textMuted, cursor: "pointer", "&:hover": { color: C.textPrimary } }}><AddIcon sx={{ fontSize: 14 }} /><Typography sx={{ fontSize: 13.5 }}>Add channels</Typography></Box>
+        </Box>
+
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 0.8, py: 0.8, mt: 1, color: C.textMuted }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}><ExpandMoreIcon sx={{ fontSize: 16 }} /><Typography sx={{ fontSize: 11, fontWeight: 800, letterSpacing: 0.6 }}>DIRECT MESSAGES</Typography></Box>
+          <IconButton size="small" onClick={onAddDM} sx={{ color: C.textMuted, width: 18, height: 18 }}><AddIcon sx={{ fontSize: 14 }} /></IconButton>
+        </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+          {users.filter((u) => u.id !== "me").map((u) => (
+            <Box key={u.id} onClick={() => onSelectDM(u.id)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && onSelectDM(u.id)} sx={{ display: "flex", alignItems: "center", gap: 1, px: 1, py: 0.5, borderRadius: 1, cursor: "pointer", color: "#cbd5e1", bgcolor: selectedDM === u.id ? C.sidebarActive : "transparent", "&:hover": { bgcolor: C.sidebarHover } }}>
+              <Badge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} badgeContent={<Box sx={{ width: 7, height: 7, borderRadius: "50%", bgcolor: u.status === "online" ? "#3db33d" : u.status === "away" ? "#ffbc1f" : "#9aa4b2", border: "1.5px solid " + C.sidebarBg }} />}>
+                <Avatar sx={{ width: 22, height: 22, fontSize: 11, bgcolor: u.color }}>{u.display[0]}</Avatar>
+              </Badge>
+              <Typography sx={{ fontSize: 13.5, flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{u.name}</Typography>
+              {u.unread && <Box sx={{ minWidth: 18, height: 18, borderRadius: 9, bgcolor: "#e53935", color: "#fff", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", px: 0.5 }}>{u.unread}</Box>}
+              {u.status === "online" && !u.unread && <CircleIcon sx={{ fontSize: 7, color: "#3db33d" }} />}
+            </Box>
+          ))}
+          <Box onClick={onAddDM} sx={{ display: "flex", alignItems: "center", gap: 1, px: 1, py: 0.5, color: C.textMuted, cursor: "pointer" }}><AddIcon sx={{ fontSize: 14 }} /><Typography sx={{ fontSize: 13.5 }}>Add direct message</Typography></Box>
+        </Box>
+      </Box>
+
+      <Box sx={{ p: 1, borderTop: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 1 }}>
+        <Badge overlap="circular" badgeContent={<Box sx={{ width: 9, height: 9, borderRadius: "50%", bgcolor: "#3db33d", border: "2px solid " + C.sidebarBg }} />} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+          <Avatar sx={{ width: 30, height: 30, bgcolor: "#7c3aed", fontSize: 12 }}>A</Avatar>
+        </Badge>
+        <Box sx={{ flex: 1, minWidth: 0 }}><Typography sx={{ fontSize: 12.5, fontWeight: 600, color: "#fff", lineHeight: 1 }}>Akmal Iqbal</Typography><Typography sx={{ fontSize: 11, color: C.textMuted }}>Online</Typography></Box>
+      </Box>
+    </Box>
+  );
+}
