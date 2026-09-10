@@ -58,16 +58,10 @@ export default function MessageInput({
       )}
       {isPickerOpen && <Box sx={{ display: { xs: "block", md: "none" }, position: "absolute", bottom: 88, left: 8, right: 8, zIndex: 10 }}><EmojiPicker onSelect={(e) => { insertAtCursor(e); setPickerOpen(false); setShowEmojiPicker(false); }} /></Box>}
 
+      <input ref={fileRef} type="file" hidden onChange={onAttach} />
       <Paper sx={{ display: "flex", flexDirection: "column", gap: 0, bgcolor: C.inputBg, borderRadius: 1.5, border: "1px solid rgba(255,255,255,0.08)", boxShadow: "none", overflow: "hidden", "&:focus-within": { borderColor: "rgba(61,125,232,0.5)" } }}>
-        <Box sx={{ display: "flex", alignItems: "flex-end", gap: 0.6, px: 1, py: 0.7 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.6, px: 1.2, py: 0.85, minHeight: 38 }}>
           <InputBase inputRef={inputRef} value={value} onChange={onChange} onKeyDown={onKeyDown} placeholder={placeholder} multiline maxRows={5} sx={{ flex: 1, fontSize: 13.2, color: C.textPrimary, "& textarea::placeholder": { color: C.textMuted, opacity: 1 } }} />
-          <Box sx={{ display: "flex", alignItems: "center", gap: 0.15, color: C.textMuted, flexShrink: 0, mb: 0.2 }}>
-            <Divider orientation="vertical" flexItem sx={{ mx: 0.4, borderColor: C.border, height: 16, alignSelf: "center", display: { xs: "none", sm: "block" } }} />
-            <input ref={fileRef} type="file" hidden onChange={onAttach} />
-            <Tooltip title="Attach file"><IconButton size="small" onClick={() => fileRef.current?.click()} sx={{ color: C.textMuted, width: 28, height: 28 }}><AttachFileIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
-            <Tooltip title="Emoji"><IconButton size="small" onClick={() => { setPickerOpen((v) => !v); setShowEmojiPicker((v) => !v); }} sx={{ color: isPickerOpen ? "#5aa9ff" : C.textMuted, width: 28, height: 28, bgcolor: isPickerOpen ? "rgba(90,169,255,0.12)" : "transparent" }}><EmojiIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
-            <Box component="button" onClick={onSend} disabled={!value.trim()} aria-label="Send" style={{ minWidth: 28, width: 28, height: 28, borderRadius: 8, border: "none", background: value.trim() ? C.accent : "#3a455c", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: value.trim() ? "pointer" : "default" }}><SendIcon sx={{ fontSize: 14 }} /></Box>
-          </Box>
         </Box>
 
         {/* Formatting toolbar — matches screenshot bottom bar */}
@@ -83,11 +77,11 @@ export default function MessageInput({
           <Tooltip title="Numbered list"><IconButton size="small" onClick={() => insertAtCursor("\n1. ")} sx={{ width: 24, height: 24, color: C.textMuted, fontSize: 11 }}>1.</IconButton></Tooltip>
           <Tooltip title="Code block"><IconButton size="small" onClick={() => applyWrap("\n```\n", "\n```")} sx={{ width: 24, height: 24, color: C.textMuted, fontSize: 10 }}>◷</IconButton></Tooltip>
           <Box sx={{ flex: 1 }} />
-          <Typography sx={{ fontSize: 11, color: C.textMuted, display: { xs: "none", sm: "block" } }}>Aa ▾</Typography>
+          <Typography sx={{ fontSize: 11, color: C.textMuted, display: { xs: "none", sm: "block" }, cursor: "pointer" }}>Aa ▾</Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 0.6, borderColor: C.border, height: 16, alignSelf: "center" }} />
-          <Tooltip title="Attach"><IconButton size="small" sx={{ color: C.textMuted, width: 24, height: 24 }}><AttachFileIcon sx={{ fontSize: 14 }} /></IconButton></Tooltip>
-          <Tooltip title="Emoji"><IconButton size="small" onClick={() => { setPickerOpen((v) => !v); setShowEmojiPicker((v) => !v); }} sx={{ color: isPickerOpen ? "#5aa9ff" : C.textMuted, width: 24, height: 24 }}><EmojiIcon sx={{ fontSize: 14 }} /></IconButton></Tooltip>
-          <Box component="button" onClick={onSend} disabled={!value.trim()} style={{ width: 28, height: 26, borderRadius: 6, border: "none", background: value.trim() ? C.accent : "#2e3548", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: value.trim() ? "pointer" : "default", marginLeft: 4 }}><SendIcon sx={{ fontSize: 13 }} /></Box>
+          <Tooltip title="Attach file"><IconButton size="small" onClick={() => fileRef.current?.click()} sx={{ color: C.textMuted, width: 24, height: 24 }}><AttachFileIcon sx={{ fontSize: 14 }} /></IconButton></Tooltip>
+          <Tooltip title="Emoji"><IconButton size="small" onClick={() => { setPickerOpen((v) => !v); setShowEmojiPicker((v) => !v); }} sx={{ color: isPickerOpen ? "#5aa9ff" : C.textMuted, width: 24, height: 24, bgcolor: isPickerOpen ? "rgba(90,169,255,0.12)" : "transparent" }}><EmojiIcon sx={{ fontSize: 14 }} /></IconButton></Tooltip>
+          <Box component="button" onClick={onSend} disabled={!value.trim()} aria-label="Send" style={{ width: 28, height: 26, borderRadius: 6, border: "none", background: value.trim() ? C.accent : "#2e3548", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: value.trim() ? "pointer" : "default", marginLeft: 4 }}><SendIcon sx={{ fontSize: 13 }} /></Box>
         </Box>
       </Paper>
     </Box>
