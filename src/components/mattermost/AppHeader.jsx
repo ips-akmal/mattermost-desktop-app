@@ -45,7 +45,12 @@ export default function AppHeader({ globalSearch, setGlobalSearch, globalResults
         {globalResults.length > 0 && (
           <Paper sx={{ position: "absolute", top: 38, width: { xs: "100%", md: 440 }, maxHeight: 320, overflowY: "auto", zIndex: 20, borderRadius: 2, p: 1 }}>
             <Typography sx={{ fontSize: 11, fontWeight: 700, color: "#64748b", px: 1, py: 0.5 }}>MESSAGES — {globalResults.length}</Typography>
-            {globalResults.map((r) => ())}
+            {globalResults.map((r) => (
+              <Box key={`${r.cid}-${r.id}`} sx={{ px: 1, py: 0.7, borderRadius: 1, cursor: "pointer", "&:hover": { bgcolor: "#f1f5f9" } }} onClick={() => setGlobalSearch("")}>
+                <Typography sx={{ fontSize: 12, fontWeight: 600, color: "#0f172a" }}>{r.channelName}</Typography>
+                <Typography sx={{ fontSize: 12, color: "#334155", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{String(r.text || "").slice(0, 80)}</Typography>
+              </Box>
+            ))}
           </Paper>
         )}
       </Box>
