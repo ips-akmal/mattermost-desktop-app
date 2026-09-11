@@ -2,6 +2,7 @@ import { Box, Typography, Avatar, Chip, Divider, IconButton, Paper, TextField, B
 import { PushPin as PinFilledIcon, Bookmark as BookmarkFilledIcon, Reply as ReplyIcon, SentimentSatisfiedAltOutlined as EmojiIcon, BookmarkBorder as BookmarkIcon, PushPinOutlined as PinIcon, MoreHoriz as MoreIcon, StarBorder as StarBorderIcon, EditOutlined as EditIcon, DescriptionOutlined as FileIcon } from "@mui/icons-material";
 import { C } from "../../theme/mattermost";
 import { renderMessageHtml } from "../../data/mockMattermost";
+import EmojiPicker from "./EmojiPicker";
 
 function ForumOutlinedIcon() {
   return <Box sx={{ fontSize: 28, color: "#94a3b8" }}>◈</Box>;
@@ -122,7 +123,7 @@ export default function MessageList({
                     <Tooltip title="Pin"><IconButton size="small" onClick={() => togglePin(m.id)} sx={{ width: 26, height: 26, color: m.pinned ? "#facc15" : C.textMuted }}><PinIcon sx={{ fontSize: 14 }} /></IconButton></Tooltip>
                     <IconButton size="small" onClick={(e) => setMsgMenu({ id: m.id, anchor: e.currentTarget })} sx={{ width: 26, height: 26, color: C.textMuted }} aria-label="More"><MoreIcon sx={{ fontSize: 14 }} /></IconButton>
                   </Box>
-                  {emojiFor === m.id && <Paper sx={{ position: "absolute", top: 22, right: 12, p: 0.6, display: "flex", gap: 0.4, zIndex: 2, borderRadius: 2 }}>{["👍", "❤️", "😂", "🎉", "✅", "👀", "🙏"].map((e) => <Box key={e} onClick={() => toggleReaction(m.id, e)} sx={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 1, cursor: "pointer", "&:hover": { bgcolor: "#f1f5f9" }, fontSize: 16 }}>{e}</Box>)}</Paper>}
+                  {emojiFor === m.id && <Box sx={{ position: "absolute", top: 24, right: 12, zIndex: 10, boxShadow: "0 8px 24px rgba(0,0,0,0.35)", borderRadius: 2, overflow: "hidden" }}><Box sx={{ transform: "scale(0.92)", transformOrigin: "top right" }}><EmojiPicker onSelect={(emoji) => { toggleReaction(m.id, emoji); setEmojiFor(null); }} /></Box></Box>}
                 </Box>
               </Box>
             );
