@@ -37,12 +37,12 @@ export const INITIAL_CHANNELS = [
 export const INITIAL_MESSAGES = {
   c5: [
     { id: "f1", userId: "sys", time: "", text: "please share the image of this dish", system: true, reactions: [], replies: 0 },
-    { id: "f2", userId: "u6", time: "8:51 PM", text: "sharing", reactions: [], replies: 0, follow: false },
-    { id: "f3", userId: "u1", time: "8:55 PM", text: "", hasDishImage: true, reactions: [], replies: 0 },
-    { id: "f4", userId: "u7", time: "2:53 PM", text: "@shahrukh.rafi-dm\n alu shimla\n price same , image same , title same , menu ma ak jgha 200g ha , ak jgha 250g . tell me what to consider ?", reactions: [], replies: 2, follow: true, divider: "Today" },
+    { id: "f2", userId: "u6", time: "8:51 PM", text: "sharing", reactions: [{ emoji: "👍", count: 1, me: false }], replies: 0, follow: false },
+    { id: "f3", userId: "u1", time: "8:55 PM", text: "", hasDishImage: true, reactions: [{ emoji: "😍", count: 3, me: false }, { emoji: "🔥", count: 1, me: true }], replies: 0 },
+    { id: "f4", userId: "u7", time: "2:53 PM", text: "@shahrukh.rafi-dm\n alu shimla\n price same , image same , title same , menu ma ak jgha 200g ha , ak jgha 250g . tell me what to consider ?", reactions: [{ emoji: "👀", count: 2, me: false }], replies: 2, follow: true, divider: "Today" },
     { id: "f5", userId: "u5", time: "", text: "mari taraf sy almost ho gya sara", replyMeta: { count: 1, follow: true }, reactions: [], replies: 1 },
-    { id: "f6", userId: "u5", time: "", text: "test kr lyn.", replyMeta: { count: 1, follow: true }, reactions: [], replies: 1 },
-    { id: "f7", userId: "u1", time: "2:55 PM", text: "ok sure", reactions: [], replies: 0 },
+    { id: "f6", userId: "u5", time: "", text: "test kr lyn.", replyMeta: { count: 1, follow: true }, reactions: [{ emoji: "✅", count: 1, me: true }], replies: 1 },
+    { id: "f7", userId: "u1", time: "2:55 PM", text: "ok sure", reactions: [{ emoji: "👍", count: 2, me: false }], replies: 0 },
   ],
   c6: [
     { id: "m1", userId: "u5", time: "8:12 PM", text: "@shahrukh.rafi-dm what will be the deadline here?", reactions: [{ emoji: "👍", count: 2, me: false }], replies: 1, hasImage: true, pinned: false, saved: false },
