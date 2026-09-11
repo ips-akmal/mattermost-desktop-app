@@ -1,8 +1,7 @@
 import { Box, Typography, Avatar, Chip, Divider, IconButton, Paper, TextField, Button, Tooltip, Badge } from "@mui/material";
 import { PushPin as PinFilledIcon, Bookmark as BookmarkFilledIcon, Reply as ReplyIcon, SentimentSatisfiedAltOutlined as EmojiIcon, BookmarkBorder as BookmarkIcon, PushPinOutlined as PinIcon, MoreHoriz as MoreIcon, StarBorder as StarBorderIcon, EditOutlined as EditIcon, DescriptionOutlined as FileIcon } from "@mui/icons-material";
 import { C } from "../../theme/mattermost";
-import { renderMessageHtml } from "../../data/mockMattermost";
-import EmojiPicker from "./EmojiPicker";
+import { renderMessageHtml, REACTION_QUICK } from "../../data/mockMattermost";
 
 function ForumOutlinedIcon() {
   return <Box sx={{ fontSize: 28, color: "#94a3b8" }}>◈</Box>;
@@ -123,7 +122,13 @@ export default function MessageList({
                     <Tooltip title="Pin"><IconButton size="small" onClick={() => togglePin(m.id)} sx={{ width: 26, height: 26, color: m.pinned ? "#facc15" : C.textMuted }}><PinIcon sx={{ fontSize: 14 }} /></IconButton></Tooltip>
                     <IconButton size="small" onClick={(e) => setMsgMenu({ id: m.id, anchor: e.currentTarget })} sx={{ width: 26, height: 26, color: C.textMuted }} aria-label="More"><MoreIcon sx={{ fontSize: 14 }} /></IconButton>
                   </Box>
-                  {emojiFor === m.id && <Box sx={{ position: "absolute", top: 24, right: 12, zIndex: 10, boxShadow: "0 8px 24px rgba(0,0,0,0.35)", borderRadius: 2, overflow: "hidden" }}><Box sx={{ transform: "scale(0.92)", transformOrigin: "top right" }}><EmojiPicker onSelect={(emoji) => { toggleReaction(m.id, emoji); setEmojiFor(null); }} /></Box></Box>}
+                  {emojiFor === m.id && (
+                    <Paper sx={{ position: "absolute", bottom: "100%", right: 12, mb: 0.5, p: 0.5, display: "flex", gap: 0.3, zIndex: 10, borderRadius: 2, bgcolor: "#1e293b", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 8px 24px rgba(0,0,0,0.45)" }}>
+                      {REACTION_QUICK.map((e) => (
+                        <Box key={e} onClick={() => { toggleReaction(m.id, e); setEmojiFor(null); }} sx={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 1, cursor: "pointer", fontSize: 16, "&:hover": { bgcolor: "rgba(255,255,255,0.08)" } }}>{e}</Box>
+                      ))}
+                    </Paper>
+                  )}
                 </Box>
               </Box>
             );

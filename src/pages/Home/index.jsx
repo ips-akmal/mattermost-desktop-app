@@ -42,6 +42,16 @@ export default function Home() {
   const [emojiFor, setEmojiFor] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [msgMenu, setMsgMenu] = useState(null);
+  // mutual exclusion: only one picker at a time
+  const handleSetEmojiFor = (val) => {
+    if (val) setShowEmojiPicker(false);
+    setEmojiFor(val);
+  };
+  const handleSetShowEmojiPicker = (val) => {
+    const next = typeof val === "function" ? val(showEmojiPicker) : val;
+    if (next) setEmojiFor(null);
+    setShowEmojiPicker(next);
+  };
 
   const dmUser = useMemo(() => (mm.selectedDM ? USERS.find((u) => u.id === mm.selectedDM) : null), [mm.selectedDM]);
   const isDM = Boolean(mm.selectedDM);
@@ -175,7 +185,7 @@ export default function Home() {
             setEditingId={mm.setEditingId}
             toggleReaction={mm.toggleReaction}
             emojiFor={emojiFor}
-            setEmojiFor={setEmojiFor}
+            setEmojiFor={handleSetEmojiFor}
             toggleSave={mm.toggleSave}
             togglePin={mm.togglePin}
             setMsgMenu={setMsgMenu}
@@ -196,7 +206,7 @@ export default function Home() {
             users={USERS}
             onMentionSelect={insertMention}
             showEmojiPicker={showEmojiPicker}
-            setShowEmojiPicker={setShowEmojiPicker}
+            setShowEmojiPicker={handleSetShowEmojiPicker}
             onAttach={() => {}}
           />
         </Box>

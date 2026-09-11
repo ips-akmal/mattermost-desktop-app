@@ -66,6 +66,8 @@ export const THREAD_REPLIES = {
   f6: [{ id: "t6", userId: "u7", time: "18 minutes ago", text: "done" }],
 };
 
+export const REACTION_QUICK = ["👍", "❤️", "😂", "🎉", "✅", "👀", "🙏", "🔥"];
+
 // --- Helpers ---
 /**
  * Safely get user by id, fallback to first user but logs warning in dev.
