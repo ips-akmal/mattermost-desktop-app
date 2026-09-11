@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Box, Typography, InputBase, Paper, IconButton, Tooltip } from "@mui/material";
-import { Search as SearchIcon } from "@mui/icons-material";
+import { Box, Typography, Paper } from "@mui/material";
 import Picker from "emoji-picker-react";
 
 /**
@@ -9,7 +8,6 @@ import Picker from "emoji-picker-react";
  * Kept Mattermost dark wrapper to match screenshot; `onSelect` receives native emoji char.
  */
 export default function EmojiPicker({ onSelect }) {
-  const [query, setQuery] = useState("");
   const [hoverEmoji, setHoverEmoji] = useState("💀");
   const [hoverName, setHoverName] = useState(":skull_and_crossbones:");
 
@@ -28,17 +26,8 @@ export default function EmojiPicker({ onSelect }) {
         maxHeight: 340,
       }}
     >
-      {/* Search — filters native picker via query prop */}
-      <Box sx={{ p: 0.8, display: "flex", alignItems: "center", gap: 0.6, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <Box sx={{ flex: 1, display: "flex", alignItems: "center", gap: 0.5, bgcolor: "#0f172a", border: "1.5px solid #3d7de8", borderRadius: 1.2, px: 0.8, py: 0.3 }}>
-          <SearchIcon sx={{ fontSize: 14, color: "#64748b" }} />
-          <InputBase value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search emojis" sx={{ flex: 1, fontSize: 11.5, color: "#e2e8f0", "& input::placeholder": { color: "#64748b", opacity: 1 } }} autoFocus />
-        </Box>
-        <Box sx={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, color: "#facc15" }}>🖐️</Box>
-      </Box>
-
-      {/* Library picker — dark theme, full search/categories — sizes decreased */}
-      <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", "& .EmojiPickerReact": { "--epr-bg-color": "#1e293b", "--epr-text-color": "#e2e8f0", "--epr-search-input-bg-color": "#0f172a", "--epr-category-label-bg-color": "#1e293b", "--epr-emoji-size": "20px", "--epr-category-label-height": "22px", border: "none", width: "100%", height: 240, "--epr-font-size": "11px" }, "& .epr-emoji": { fontSize: "18px" }, "& .epr-category-nav": { padding: "4px" } }}>
+      {/* Library picker — single search (library's own) — sizes decreased */}
+      <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", "& .EmojiPickerReact": { "--epr-bg-color": "#1e293b", "--epr-text-color": "#e2e8f0", "--epr-search-input-bg-color": "#0f172a", "--epr-category-label-bg-color": "#1e293b", "--epr-emoji-size": "20px", "--epr-category-label-height": "22px", border: "none", width: "100%", height: 260, "--epr-font-size": "11px" }, "& .epr-emoji": { fontSize: "18px" }, "& .epr-category-nav": { padding: "4px" } }}>
         <Picker
           onEmojiClick={(emojiData) => {
             onSelect(emojiData.emoji);
