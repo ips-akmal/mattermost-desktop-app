@@ -16,8 +16,10 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^9.3.1",
     "@mui/material": "^9.3.1",
+    "emoji-picker-react": "^4.20.7",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-input-emoji": "^5.9.0",
     "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
