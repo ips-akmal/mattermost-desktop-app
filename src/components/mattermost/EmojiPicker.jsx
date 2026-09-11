@@ -26,8 +26,8 @@ export default function EmojiPicker({ onSelect }) {
         maxHeight: 340,
       }}
     >
-      {/* Library picker — single search (library's own) — sizes decreased */}
-      <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", "& .EmojiPickerReact": { "--epr-bg-color": "#1e293b", "--epr-text-color": "#e2e8f0", "--epr-search-input-bg-color": "#0f172a", "--epr-category-label-bg-color": "#1e293b", "--epr-emoji-size": "20px", "--epr-category-label-height": "22px", border: "none", width: "100%", height: 260, "--epr-font-size": "11px" }, "& .epr-emoji": { fontSize: "18px" }, "& .epr-category-nav": { padding: "4px" } }}>
+      {/* Library picker — single search — further decreased headings & emojis */}
+      <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", "& .EmojiPickerReact": { "--epr-bg-color": "#1e293b", "--epr-text-color": "#e2e8f0", "--epr-search-input-bg-color": "#0f172a", "--epr-category-label-bg-color": "#1e293b", "--epr-emoji-size": "16px", "--epr-category-label-height": "18px", border: "none", width: "100%", height: 260, "--epr-font-size": "9px", "--epr-category-navigation-button-size": "22px" }, "& .epr-emoji": { fontSize: "15px" }, "& .epr-category-nav": { padding: "2px 4px", gap: "2px" }, "& .epr-category-nav button": { width: "22px", height: "22px" }, "& .epr-category-nav button svg": { width: "14px", height: "14px" }, "& .epr-emoji-category-label": { fontSize: "9px", fontWeight: 600, padding: "2px 8px" } }}>
         <Picker
           onEmojiClick={(emojiData) => {
             onSelect(emojiData.emoji);
