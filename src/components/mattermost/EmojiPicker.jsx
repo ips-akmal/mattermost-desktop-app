@@ -16,7 +16,7 @@ export default function EmojiPicker({ onSelect }) {
   return (
     <Paper
       sx={{
-        width: 360,
+        width: 320,
         maxWidth: "92vw",
         bgcolor: "#1e293b",
         border: "1px solid rgba(255,255,255,0.08)",
@@ -25,20 +25,20 @@ export default function EmojiPicker({ onSelect }) {
         boxShadow: "0 8px 32px rgba(0,0,0,0.45)",
         display: "flex",
         flexDirection: "column",
-        maxHeight: 380,
+        maxHeight: 340,
       }}
     >
       {/* Search — filters native picker via query prop */}
-      <Box sx={{ p: 1, display: "flex", alignItems: "center", gap: 0.7, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <Box sx={{ flex: 1, display: "flex", alignItems: "center", gap: 0.6, bgcolor: "#0f172a", border: "2px solid #3d7de8", borderRadius: 1.5, px: 1, py: 0.4 }}>
-          <SearchIcon sx={{ fontSize: 16, color: "#64748b" }} />
-          <InputBase value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search emojis" sx={{ flex: 1, fontSize: 13, color: "#e2e8f0", "& input::placeholder": { color: "#64748b", opacity: 1 } }} autoFocus />
+      <Box sx={{ p: 0.8, display: "flex", alignItems: "center", gap: 0.6, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <Box sx={{ flex: 1, display: "flex", alignItems: "center", gap: 0.5, bgcolor: "#0f172a", border: "1.5px solid #3d7de8", borderRadius: 1.2, px: 0.8, py: 0.3 }}>
+          <SearchIcon sx={{ fontSize: 14, color: "#64748b" }} />
+          <InputBase value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search emojis" sx={{ flex: 1, fontSize: 11.5, color: "#e2e8f0", "& input::placeholder": { color: "#64748b", opacity: 1 } }} autoFocus />
         </Box>
-        <Box sx={{ width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#facc15" }}>🖐️</Box>
+        <Box sx={{ width: 22, height: 22, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, color: "#facc15" }}>🖐️</Box>
       </Box>
 
-      {/* Library picker — dark theme, full search/categories */}
-      <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", "& .EmojiPickerReact": { "--epr-bg-color": "#1e293b", "--epr-text-color": "#e2e8f0", "--epr-search-input-bg-color": "#0f172a", "--epr-category-label-bg-color": "#1e293b", border: "none", width: "100%", height: 280 } }}>
+      {/* Library picker — dark theme, full search/categories — sizes decreased */}
+      <Box sx={{ flex: 1, overflow: "hidden", bgcolor: "#1e293b", "& .EmojiPickerReact": { "--epr-bg-color": "#1e293b", "--epr-text-color": "#e2e8f0", "--epr-search-input-bg-color": "#0f172a", "--epr-category-label-bg-color": "#1e293b", "--epr-emoji-size": "20px", "--epr-category-label-height": "22px", border: "none", width: "100%", height: 240, "--epr-font-size": "11px" }, "& .epr-emoji": { fontSize: "18px" }, "& .epr-category-nav": { padding: "4px" } }}>
         <Picker
           onEmojiClick={(emojiData) => {
             onSelect(emojiData.emoji);
@@ -55,10 +55,10 @@ export default function EmojiPicker({ onSelect }) {
         />
       </Box>
 
-      {/* Preview — mirrors screenshot bottom bar */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, px: 1.2, py: 0.7, borderTop: "1px solid rgba(255,255,255,0.06)", bgcolor: "#162032", minHeight: 36 }}>
-        <Box sx={{ fontSize: 20 }}>{hoverEmoji}</Box>
-        <Typography sx={{ fontSize: 12, color: "#cbd5e1", fontFamily: "monospace" }}>{hoverName}</Typography>
+      {/* Preview — smaller text/emoji */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0.8, px: 1, py: 0.5, borderTop: "1px solid rgba(255,255,255,0.06)", bgcolor: "#162032", minHeight: 30 }}>
+        <Box sx={{ fontSize: 16 }}>{hoverEmoji}</Box>
+        <Typography sx={{ fontSize: 10.5, color: "#cbd5e1", fontFamily: "monospace" }}>{hoverName}</Typography>
       </Box>
     </Paper>
   );
